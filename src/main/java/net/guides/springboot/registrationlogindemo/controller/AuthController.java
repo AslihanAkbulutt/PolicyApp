@@ -1,6 +1,6 @@
 package net.guides.springboot.registrationlogindemo.controller;
 
-import org.springframework.stereotype.Controller;
+
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.entity.User;
 import net.guides.springboot.registrationlogindemo.service.UserService;
@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 
 import java.util.List;
 
@@ -27,8 +28,10 @@ public class AuthController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
+
+    @GetMapping("/")
+    public String getHomepage() {
+        UserDto user = new UserDto();
         return "login";
     }
 

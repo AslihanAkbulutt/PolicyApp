@@ -85,11 +85,12 @@
                         <p th:errors="*{password}" class="text-danger"
                            th:if="${#fields.hasErrors('password')}">
                         </p>
+
                     </div>
 
                     <div class="form-group mb-3">
                         <button class="btn btn-primary" type="submit">Register</button>
-                        <span>Already registered? <a href="/" th:href="@{/login}">Login
+                        <span>Already registered? <a href="/" th:href="@{/}">Login
                              here</a></span>
                     </div>
                 </form>
