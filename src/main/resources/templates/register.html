@@ -88,12 +88,23 @@
 
                     </div>
 
+                    <input
+                           id="role"
+                           name="role"
+                           th:field="*{role}"
+                           type="checkbox">
+                    <label> Are you an Agency?</label>
+                    <p th:errors="*{role}" class="text-danger"
+                       th:if="${#fields.hasErrors('role')}">
+                    </p>
+
                     <div class="form-group mb-3">
                         <button class="btn btn-primary" type="submit">Register</button>
                         <span>Already registered? <a href="/" th:href="@{/}">Login
                              here</a></span>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

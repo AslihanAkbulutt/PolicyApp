@@ -37,12 +37,26 @@ public class UserServiceImpl implements UserService {
         //encrypt the password once we integrate spring security
         //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
-            role = checkRoleExist();
+        if(userDto.isRole())
+        {
+            Role role1 = roleRepository.findByName("AGENCY");
+            if(role1 == null){
+                role1 = checkRoleExistA();
+            }
+            user.setRoles(Arrays.asList(role1));
+            userRepository.save(user);
         }
-        user.setRoles(Arrays.asList(role));
-        userRepository.save(user);
+        else
+        {
+            Role role2 = roleRepository.findByName("USER");
+            if(role2 == null){
+                role2 = checkRoleExistU();
+            }
+            user.setRoles(Arrays.asList(role2));
+            userRepository.save(user);
+        }
+
+
     }
 
     @Override
@@ -66,9 +80,14 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private Role checkRoleExist() {
+    private Role checkRoleExistA() {
         Role role = new Role();
-        role.setName("ROLE_ADMIN");
+        role.setName("AGENCY");
+        return roleRepository.save(role);
+    }
+    private Role checkRoleExistU() {
+        Role role = new Role();
+        role.setName("USER");
         return roleRepository.save(role);
     }
 }
