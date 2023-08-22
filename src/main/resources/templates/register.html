@@ -21,13 +21,10 @@ background-size: cover;">
         align-items: center;
         width: 50%;" class="container">
     <div class="row col-md-8 offset-md-2">
-        <div style=" backdrop-filter: blur(30px);">
+        <div style="border-radius: 10px; backdrop-filter: blur(50px);">
             <div th:if="${param.success}">
                 <div class="alert alert-info">You've successfully registered
                     to our app!</div>
-            </div>
-            <div class="card-header">
-                <h2 class="text-center">Registration</h2>
             </div>
             <div class="card-body">
                 <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
@@ -99,7 +96,7 @@ background-size: cover;">
                     <br/>
 
                     <div class="form-group mb-3">
-                        <button style="background-color: black; margin-left: 125px; width: 180px; margin-top: 10px; border-radius: 0" class="btn btn-primary" type="submit">Register</button>
+                        <button style="background-color: #004693; margin-left: 125px; width: 180px; margin-top: 8px; border-radius: 0" class="btn btn-primary" type="submit">Register</button>
                         <br/>
                         <br/>
                         <span style="color: black;">Already registered? <a href="/" th:href="@{/}">Login
@@ -110,6 +107,16 @@ background-size: cover;">
             </div>
         </div>
     </div>
+    <div class="row">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+    </div>
 </div>
 </body>
+<footer style=" height:30px;">
+
+</footer>
 </html>
