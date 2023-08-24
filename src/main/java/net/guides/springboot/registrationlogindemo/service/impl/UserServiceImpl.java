@@ -6,11 +6,13 @@ import net.guides.springboot.registrationlogindemo.repository.UserRepository;
 import net.guides.springboot.registrationlogindemo.repository.RoleRepository;
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,9 +57,12 @@ public class UserServiceImpl implements UserService {
             user.setRoles(Arrays.asList(role2));
             userRepository.save(user);
         }
-
-
     }
+    @Override
+    public void saveUser(User user) {
+       this.userRepository.save(user);
+    }
+
 
     @Override
     public User findByEmail(String email) {
@@ -66,12 +71,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAllUsers() {
-        List<User> users = userRepository.findAll();
+        List<User> users = (List<User>) userRepository.findAll();
         return users.stream().map((user) -> convertEntityToDto(user))
                 .collect(Collectors.toList());
     }
 
-    private UserDto convertEntityToDto(User user){
+    @Override
+    public void deleteUserByEmail(String email) {
+        User user = findByEmail(email);
+        this.userRepository.deleteById(user.getId());
+    }
+
+
+    public UserDto convertEntityToDto(User user){
         UserDto userDto = new UserDto();
         String[] name = user.getName().split(" ");
         userDto.setFirstName(name[0]);

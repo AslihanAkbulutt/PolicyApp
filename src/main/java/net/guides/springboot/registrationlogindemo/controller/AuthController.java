@@ -5,6 +5,7 @@ import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.entity.User;
 import net.guides.springboot.registrationlogindemo.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +44,6 @@ public class AuthController {
         return "register";
     }
 
-    // handler method to handle register user form submit request
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto user,
                                BindingResult result,
@@ -59,11 +59,13 @@ public class AuthController {
         userService.saveUser(user);
         return "redirect:/register?success";
     }
+    // handler method to handle register user form submit request
 
-    @GetMapping("/users")
-    public String listRegisteredUsers(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
+
+    @GetMapping("customer")
+    public String customerPage()
+    {
+        return "customer";
     }
+
 }
