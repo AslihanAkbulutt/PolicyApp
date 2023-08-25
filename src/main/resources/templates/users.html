@@ -4,42 +4,50 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Registration and Login System</title>
+    <title>Kullanıcılar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body style=" background-image: url('https://img.freepik.com/free-photo/abstract-blur-hotel-interior_1203-8547.jpg?w=996&t=st=1692963512~exp=1692964112~hmac=11e90963c10b57b144326406da6a180180b73e7dce396890bd5d4f216b939aeb');
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;">
+<nav style="color: white; background-color: #004693" class="navbar navbar-expand-lg ">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">WELCOME   </a>
+        <a style="color: white" class="navbar-brand" href="#"><b>Ana Sayfa</b></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/register}">Register</a>
+                    <a style="color: white" class="nav-link active" aria-current="page" th:href="@{/register}">Kayıt Ol</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+                    <a style="color: white" class="nav-link active" aria-current="page" th:href="@{/logout}">Çıkış Yap</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<br />
+<br />
+<br />
+<br />
 <div class="container">
     <div class="row">
-        <h1> Registered Users </h1>
+
     </div>
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="table-dark">
+    <table style="background-color: white" class="table table-striped table-hover">
+        <thead style="color: white; background-color: #004693">
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Ad</th>
+                <th>Soyad</th>
                 <th>Email</th>
-                <th>Actions</th>
+                <th>İşlemler</th>
             </tr>
         </thead>
         <tbody>
@@ -48,11 +56,14 @@
                 <td th:text="${user.firstName}"></td>
                 <td th:text="${user.lastName}"></td>
                 <td th:text="${user.email}"></td>
-                <td><a th:href="@{/users/update/{email}(email=${user.email})}" class="btn btn-primary">Update</a>
-                    <a th:href="@{/users/delete/{email}(email=${user.email})}" class="btn btn-danger">Delete</a></td>
+                <td><a th:href="@{/users/update/{email}(email=${user.email})}" class="btn btn-primary">Düzenle</a>
+                    <a th:href="@{/users/delete/{email}(email=${user.email})}" class="btn btn-danger">Sil</a></td>
             </tr>
 
     </table>
+    <br/>
+    <br/>
+    <br/>
 </div>
 </body>
 </html>

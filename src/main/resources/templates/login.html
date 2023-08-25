@@ -29,10 +29,10 @@ background-size: cover;">
         <div class="col-md-6 offset-md-3">
 
             <div th:if="${param.error}">
-                <div class="alert alert-danger">Invalid Email and Password.</div>
+                <div class="alert alert-danger">Mail veya Şifre Yanlış!</div>
             </div>
             <div th:if="${param.logout}">
-                <div class="alert alert-success">You have been logged out.</div>
+                <div class="alert alert-success">Çıkış Yaptınız!</div>
             </div>
             <div style=" margin-left: 20px; margin-top: 68px; margin-bottom: 30px;"><img style="max-width: 330px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Anadolu_Sigorta_logo.svg/428px-Anadolu_Sigorta_logo.svg.png"></div>
 
@@ -60,17 +60,17 @@ background-size: cover;">
                                    id="password"
                                    name="password"
                                    class="form-control"
-                                   placeholder="Password"
+                                   placeholder="Şifre"
                             />
                         </div>
 
                         <div class="mb-3">
 
-                            <span style="margin-left: 30px;"> Not registered?
-                            <a style="color: #004693" th:href="@{/register}"> Register/SignUp Here</a>
+                            <span style="margin-left: 30px;"> Kayıt Olmadınız Mı?
+                            <a style="color: #004693" th:href="@{/register}"> Buradan Kayıt Olun!</a>
                                 <br/>
                                 <button style="background-color: #004693; margin-left: 75px; width: 180px; margin-top: 30px; border-radius: 0" type="submit" class="btn btn-primary" >
-                                    Login</button>
+                                    Giriş Yapın</button>
                             </span>
                         </div>
                     </form>
