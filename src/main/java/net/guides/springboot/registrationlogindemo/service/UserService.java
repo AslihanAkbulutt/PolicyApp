@@ -1,17 +1,16 @@
 package net.guides.springboot.registrationlogindemo.service;
 
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
-import net.guides.springboot.registrationlogindemo.entity.User;
-import org.springframework.data.domain.Page;
+import net.guides.springboot.registrationlogindemo.entity.UserEntity;
 
 import java.util.List;
 public interface UserService {
     void saveUser(UserDto userDto);
-    void saveUser(User user);
+    void saveUser(UserEntity userEntity);
 
-    User findByEmail(String email);
+    UserEntity findByEmail(String email);
 
-    public UserDto convertEntityToDto(User user);
+    public UserDto convertEntityToDto(UserEntity userEntity);
     List<UserDto> findAllUsers();
 
 

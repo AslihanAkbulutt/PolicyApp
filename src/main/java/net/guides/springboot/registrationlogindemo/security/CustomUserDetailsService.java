@@ -1,6 +1,6 @@
 package net.guides.springboot.registrationlogindemo.security;
 
-import net.guides.springboot.registrationlogindemo.entity.User;
+import net.guides.springboot.registrationlogindemo.entity.UserEntity;
 import net.guides.springboot.registrationlogindemo.entity.Role;
 import net.guides.springboot.registrationlogindemo.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,12 +25,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+        UserEntity userEntity = userRepository.findByEmail(email);
 
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                    user.getPassword(),
-                    mapRolesToAuthorities(user.getRoles()));
+        if (userEntity != null) {
+            return new org.springframework.security.core.userdetails.User(userEntity.getEmail(),
+                    userEntity.getPassword(),
+                    mapRolesToAuthorities(userEntity.getRoles()));
         }else{
             throw new UsernameNotFoundException("Invalid username or password.");
         }

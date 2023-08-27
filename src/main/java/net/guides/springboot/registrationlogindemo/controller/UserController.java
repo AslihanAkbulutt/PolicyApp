@@ -1,13 +1,15 @@
 package net.guides.springboot.registrationlogindemo.controller;
 
-import jakarta.validation.Valid;
-import net.guides.springboot.registrationlogindemo.entity.User;
+import net.guides.springboot.registrationlogindemo.entity.UserEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,12 @@ public class UserController {
 
     @GetMapping("/users")
     public String listUsers(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity userEntity = userService.findByEmail(((User)authentication.getPrincipal()).getUsername());
+        if (userEntity.getRoles().get(0).getName().equals("USER"))
+        {
+            return "index";
+        }
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users",users);
         return "users";
@@ -33,22 +41,22 @@ public class UserController {
 
     @GetMapping("users/add")
     public String showNewUserForm(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+        UserEntity userEntity = new UserEntity();
+        model.addAttribute("user", userEntity);
         return "create-user";
     }
 
     @PostMapping("users/save")
-    public String saveUser(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+    public String saveUser(@ModelAttribute("user") UserEntity userEntity) {
+        userService.saveUser(userEntity);
         return "redirect:/users";
     }
 
     @GetMapping("users/update/{email}")
     public String showFormForUpdate(@PathVariable( value = "email") String email, Model model) {
 
-        User user = userService.findByEmail(email);
-        model.addAttribute("user", user);
+        UserEntity userEntity = userService.findByEmail(email);
+        model.addAttribute("user", userEntity);
         return "update-user";
     }
 

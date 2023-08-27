@@ -2,19 +2,19 @@ package net.guides.springboot.registrationlogindemo.controller;
 
 
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
-import net.guides.springboot.registrationlogindemo.entity.User;
+import net.guides.springboot.registrationlogindemo.entity.UserEntity;
 import net.guides.springboot.registrationlogindemo.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-
-import java.util.List;
 
 @Controller
 public class AuthController {
@@ -48,7 +48,7 @@ public class AuthController {
     public String registration(@Valid @ModelAttribute("user") UserDto user,
                                BindingResult result,
                                Model model){
-        User existing = userService.findByEmail(user.getEmail());
+        UserEntity existing = userService.findByEmail(user.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
         }

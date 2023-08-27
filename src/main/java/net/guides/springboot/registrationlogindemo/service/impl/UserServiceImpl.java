@@ -1,18 +1,16 @@
 package net.guides.springboot.registrationlogindemo.service.impl;
 
 import net.guides.springboot.registrationlogindemo.entity.Role;
-import net.guides.springboot.registrationlogindemo.entity.User;
+import net.guides.springboot.registrationlogindemo.entity.UserEntity;
 import net.guides.springboot.registrationlogindemo.repository.UserRepository;
 import net.guides.springboot.registrationlogindemo.repository.RoleRepository;
 import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.service.UserService;
-import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,21 +30,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDto userDto) {
-        User user = new User();
-        user.setName(userDto.getFirstName() + " " + userDto.getLastName());
-        user.setEmail(userDto.getEmail());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(userDto.getFirstName() + " " + userDto.getLastName());
+        userEntity.setEmail(userDto.getEmail());
 
         //encrypt the password once we integrate spring security
         //user.setPassword(userDto.getPassword());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         if(userDto.isRole())
         {
             Role role1 = roleRepository.findByName("AGENCY");
             if(role1 == null){
                 role1 = checkRoleExistA();
             }
-            user.setRoles(Arrays.asList(role1));
-            userRepository.save(user);
+            userEntity.setRoles(Arrays.asList(role1));
+            userRepository.save(userEntity);
         }
         else
         {
@@ -54,41 +52,41 @@ public class UserServiceImpl implements UserService {
             if(role2 == null){
                 role2 = checkRoleExistU();
             }
-            user.setRoles(Arrays.asList(role2));
-            userRepository.save(user);
+            userEntity.setRoles(Arrays.asList(role2));
+            userRepository.save(userEntity);
         }
     }
     @Override
-    public void saveUser(User user) {
-       this.userRepository.save(user);
+    public void saveUser(UserEntity userEntity) {
+       this.userRepository.save(userEntity);
     }
 
 
     @Override
-    public User findByEmail(String email) {
+    public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     public List<UserDto> findAllUsers() {
-        List<User> users = (List<User>) userRepository.findAll();
-        return users.stream().map((user) -> convertEntityToDto(user))
+        List<UserEntity> userEntities = (List<UserEntity>) userRepository.findAll();
+        return userEntities.stream().map((user) -> convertEntityToDto(user))
                 .collect(Collectors.toList());
     }
 
     @Override
     public void deleteUserByEmail(String email) {
-        User user = findByEmail(email);
-        this.userRepository.deleteById(user.getId());
+        UserEntity userEntity = findByEmail(email);
+        this.userRepository.deleteById(userEntity.getId());
     }
 
 
-    public UserDto convertEntityToDto(User user){
+    public UserDto convertEntityToDto(UserEntity userEntity){
         UserDto userDto = new UserDto();
-        String[] name = user.getName().split(" ");
+        String[] name = userEntity.getName().split(" ");
         userDto.setFirstName(name[0]);
         userDto.setLastName(name[1]);
-        userDto.setEmail(user.getEmail());
+        userDto.setEmail(userEntity.getEmail());
         return userDto;
     }
 
