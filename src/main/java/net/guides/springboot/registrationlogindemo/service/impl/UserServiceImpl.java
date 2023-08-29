@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserByEmail(String email) {
         UserEntity userEntity = findByEmail(email);
+        userEntity.getRoles().clear();
         this.userRepository.deleteById(userEntity.getId());
     }
 

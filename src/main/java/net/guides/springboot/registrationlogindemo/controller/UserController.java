@@ -10,11 +10,13 @@ import net.guides.springboot.registrationlogindemo.dto.UserDto;
 import net.guides.springboot.registrationlogindemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -30,7 +32,7 @@ public class UserController {
     public String listUsers(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity userEntity = userService.findByEmail(((User)authentication.getPrincipal()).getUsername());
-        if (userEntity.getRoles().get(0).getName().equals("USER"))
+        if (userEntity != null && !CollectionUtils.isEmpty(userEntity.getRoles()) && userEntity.getRoles().get(0).getName().equals("USER"))
         {
             return "index";
         }
